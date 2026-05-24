@@ -1,0 +1,98 @@
+{
+  "_comment": "Cross-encoder / reranker models to test. Tested one at a time in p04.",
+  "models": [
+    {
+      "name": "TinyBERT",
+      "model": "cross-encoder/ms-marco-TinyBERT-L-2-v2",
+      "max_length": 512,
+      "reranker": true,
+      "quantization": true
+    },
+    {
+      "name": "MiniLM-L6",
+      "model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "max_length": 512,
+      "reranker": true,
+      "quantization": true
+    },
+    {
+      "name": "mxbai-xsmall",
+      "model": "mixedbread-ai/mxbai-rerank-xsmall-v1",
+      "max_length": 512,
+      "reranker": true,
+      "quantization": true
+    },
+    {
+      "name": "AnswerDotAI-Trainic",
+      "model": "answerdotai/answerai-colbert-small-v1",
+      "max_length": 512,
+      "reranker": true,
+      "quantization": false
+    },
+    {
+      "name": "bge-reranker-base",
+      "model": "BAAI/bge-reranker-base",
+      "max_length": 512,
+      "reranker": true,
+      "quantization": true
+    }
+  ],
+  "training": {
+    "default_model_key": "MiniLM-L6",
+    "max_candidates": 30,
+    "num_hard_negatives": 5,
+    "sample_size": 200,
+    "min_sample_for_full_train": 100,
+    "num_train_epochs": 2,
+    "per_device_train_batch_size": 8,
+    "per_device_train_batch_size_gpu": 16,
+    "warmup_steps": 30,
+    "logging_steps": 10,
+    "save_steps": 100,
+    "eval_steps": 100,
+    "save_strategy": "steps",
+    "eval_strategy": "steps",
+    "load_best_model_at_end": true,
+    "metric_for_best_model": "eval_loss",
+    "greater_is_better": false,
+    "save_total_limit": 1,
+    "fp16": true,
+    "dataloader_num_workers": 2,
+    "overwrite_output_dir": true,
+    "course_filter": null,
+    "boost_question": 5.0,
+    "boost_text": 5.0,
+    "rrf_k": 60
+  },
+  "inference": {
+    "providers_priority": [
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "cpu_batch_size_small": 8,
+    "cpu_batch_size_medium": 16,
+    "cpu_batch_size_large": 24,
+    "gpu_batch_size": 32,
+    "cpu_threshold_small": 4,
+    "cpu_threshold_medium": 8
+  },
+  "ray_training": {
+    "model_key": "TinyBERT",
+    "output_subdir": "TinyBERT-finetuned-test",
+    "max_length": 512,
+    "num_labels": 1,
+    "max_negatives": 5,
+    "dataloader_num_workers": 2,
+    "epochs": 3,
+    "batch_size": 16,
+    "lr": 2e-05,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1,
+    "grad_clip": 1.0,
+    "fp16": false,
+    "log_every_n_steps": 5,
+    "alpha": 0.5,
+    "num_workers": 1,
+    "use_gpu": false
+  }
+}

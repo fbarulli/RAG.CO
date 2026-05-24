@@ -1,0 +1,24 @@
+{
+  "_comment": "All filesystem paths for the pipeline. Single source of truth for Paths class.",
+  "raw_dir": "data/raw",
+  "processed_dir": "data/processed",
+  "experiments_dir": "experiments",
+  "clean_jsonl": "data/processed/clean.jsonl",
+  "test_jsonl": "data/processed/test.jsonl",
+  "topic_assignments": "src/rag_pipeline/eda/p02_eda/experiments/topic_assignments_all.json",
+  "retrieval_configs": "configs/retrieval_configs.json",
+  "models_config": "configs/models.json",
+  "rerankers_config": "configs/rerankers.json",
+  "embeddings_cache_dir": "experiments/embeddings",
+  "reranker_results_dir": "experiments/reranker_benchmarks",
+  "input_mapping": {
+    "parse": "data/processed/parsed.jsonl",
+    "dedup": "data/processed/parsed.jsonl",
+    "eda": "data/processed/clean.jsonl"
+  },
+  "output_mapping": {
+    "parse": "data/processed/parsed.jsonl",
+    "dedup": "data/processed/clean.jsonl",
+    "eda": "data/processed/clean.jsonl"
+  }
+}
