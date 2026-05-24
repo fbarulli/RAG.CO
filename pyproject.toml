@@ -1,0 +1,9 @@
+[project]
+name = "reranker-colab"
+version = "0.1.0"
+dependencies = [
+    "torch",
+    "transformers",
+    "ray[train]",
+    "sentence-transformers",
+]
