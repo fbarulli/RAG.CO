@@ -273,7 +273,8 @@ def train_direct(config: dict) -> None:
                 nn.utils.clip_grad_norm_(model.parameters(), config["grad_clip"])
                 scaler.step(optimizer)
                 scaler.update()
-                scheduler.step()
+                if scaler.get_scale() > 0:
+                    scheduler.step()
 
             except Exception:
                 logger.error("Step %d failed\n%s", global_step, traceback.format_exc())
