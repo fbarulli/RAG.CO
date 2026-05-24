@@ -77,8 +77,8 @@ def train_loop_per_worker(config: dict) -> None:
     try:
         tokenizer = AutoTokenizer.from_pretrained(config["model_name"], use_fast=True)
         model     = AutoModelForSequenceClassification.from_pretrained(
-            config["model_name"], num_labels=config["num_labels"]
-        )
+            config["model_name"], num_labels=config["num_labels"], torch_dtype=torch.float32,
+        ).to(device)
     except Exception:
         logger.error("Failed to load model '%s'\n%s", config["model_name"], traceback.format_exc())
         raise
