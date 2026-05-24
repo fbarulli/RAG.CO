@@ -149,7 +149,8 @@ def train_loop_per_worker(config: dict) -> None:
                 nn.utils.clip_grad_norm_(model.parameters(), config["grad_clip"])
                 scaler.step(optimizer)
                 scaler.update()
-                scheduler.step()
+                if scaler.get_scale() > 0:
+                    scheduler.step()
 
             except Exception:
                 logger.error(
