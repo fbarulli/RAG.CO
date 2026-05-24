@@ -35,7 +35,7 @@ from typing import Any, Callable
 
 import torch
 from torch.utils.data import Dataset
-from transformers import AutoTokenizer, PreTrainedTokenizerFast
+from transformers import AutoTokenizer
 
 logger = logging.getLogger(__name__)
 
@@ -130,7 +130,7 @@ class RerankerDataset(Dataset):
 # Collate function factory
 # ---------------------------------------------------------------------------
 
-def make_collate_fn(tokenizer: PreTrainedTokenizerFast, max_length: int) -> Callable:
+def make_collate_fn(tokenizer: AutoTokenizer, max_length: int) -> Callable:
     """
     Build a collate function for DataLoader.
 
@@ -163,7 +163,7 @@ def make_collate_fn(tokenizer: PreTrainedTokenizerFast, max_length: int) -> Call
                 passages.append(neg)
 
         try:
-            encoded = tokenizer.batch_encode_plus(
+            encoded = tokenizer(
                 list(zip(queries, passages)),
                 padding="longest",          # tight to the batch, not max_length
                 truncation=True,
